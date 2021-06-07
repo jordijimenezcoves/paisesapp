@@ -1,0 +1,38 @@
+<div class="animate__animated animate__backInRight">
+    <h3>Buscar por región <small>{{regionActiva | titlecase}}</small></h3>
+    <hr>
+    <h5>Seleccione la región</h5>
+
+    <div class="row">
+        <div class="col">
+            <!-- Agregar clases de forma condicional -->
+            <!-- 1) La clase se añade a las ya existentes en el elemento si se cumple la condición -->
+            <!-- [class.btn-primary]="region === regionActiva" -->
+            <!-- 2) Las clases se añaden a las ya existentes en el elemento si se cumple cada condición -->
+            <!-- [ngClass]="{
+                'btn-primary': region === regionActiva,
+                'btn-outline-primary': region !== regionActiva
+            }" -->
+            <!-- 3) Se añaden unas u otras clases dependiendo de la expresión (más eficiente que las anteriores, dado que la expresión solo se evalúa una vez) -->
+            <!-- [class]="(region === regionActiva) ? 'btn btn-primary' : 'btn btn-outline-primary'"  -->
+            <!-- 4) También se puede llamar a un método y que este se encargue de evaluar la expresión y devolver las clases a aplicar: -->
+            <button 
+                *ngFor="let region of regiones" 
+                [class]="getClaseCSS(region)" 
+                (click)="activarRegion(region)"
+            >
+                {{region | titlecase}}
+            </button>
+        </div>
+    </div>
+
+    <div class="alert alert-danger" *ngIf="hayError">
+        No se encontró nada en la región {{regionActiva}}
+    </div>
+
+    <div class="row" *ngIf="paises.length > 0">
+        <div class="col">
+            <app-pais-tabla [paises]="paises"></app-pais-tabla>
+        </div>
+    </div>
+</div>
